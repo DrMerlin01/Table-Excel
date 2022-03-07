@@ -92,8 +92,8 @@ private:
 	Sheet& sheet_;
 	Position pos_;
 	std::unique_ptr<Impl> impl_;
-	Cells incoming_references_;//от которых зависит эта ячейка
-	Cells outgoing_references_;//обратные связи на другие ячейки из этой
+	Cells incoming_references_; //связи, от которых зависит эта ячейка
+	Cells outgoing_references_; //обратные связи на другие ячейки из этой
 	mutable std::optional<Value> cache_;
 
 	Cell* MakeCell(Position pos) const;

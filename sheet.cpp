@@ -20,9 +20,7 @@ Sheet::~Sheet() {
 }
 
 void Sheet::SetCell(Position pos, string text) {
-	if (!pos.IsValid()) {
-		throw InvalidPositionException("Invalid position passed to set!!!");
-	}
+	IsValidPosition(pos, "SetCell");
 
 	cells_.resize(max(pos.row + 1, static_cast<int>(cells_.size())));
 	cells_[pos.row].resize(max(pos.col + 1, static_cast<int>(cells_[pos.row].size())));
@@ -43,9 +41,7 @@ CellInterface* Sheet::GetCell(Position pos) {
 }
 
 void Sheet::ClearCell(Position pos) {
-	if (!pos.IsValid()) {
-		throw InvalidPositionException("Invalid position passed to clear!!!");
-	}
+	IsValidPosition(pos, "ClearCell");
 
 	if (pos.row < static_cast<int>(cells_.size()) && pos.col < static_cast<int>(cells_[pos.row].size())) {
 		auto &cell = cells_[pos.row][pos.col];
@@ -87,9 +83,7 @@ void Sheet::PrintTexts(ostream& output) const {
 }
 
 const Cell* Sheet::GetCellByIndex(const Position pos) const {
-	if (!pos.IsValid()) {
-		throw InvalidPositionException("Invalid position passed to get!!!");
-	}
+	IsValidPosition(pos, "GetCellByIndex");
 
 	if (pos.row >= static_cast<int>(cells_.size()) || 
 		pos.col >= static_cast<int>(cells_[pos.row].size()) ||
@@ -118,6 +112,12 @@ void Sheet::PrintCells(ostream &output, const function<void(const CellInterface 
 			}
 		}
 		output << '\n';
+	}
+}
+
+void Sheet::IsValidPosition(const Position pos, const string& function_name) const {
+	if (!pos.IsValid()) {
+		throw InvalidPositionException("Invalid position passed to " + function_name + "!!!");
 	}
 }
 

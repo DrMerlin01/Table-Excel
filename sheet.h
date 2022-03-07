@@ -32,5 +32,7 @@ public:
 private:
 	void PrintCells(std::ostream &output, const std::function<void(const CellInterface &)> &printCell) const;
 
+	void IsValidPosition(const Position pos, const std::string& function_name) const;
+
 	std::vector<std::vector<std::unique_ptr<Cell>>> cells_;
 };
