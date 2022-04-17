@@ -132,7 +132,7 @@ void Cell::UpdateReferences() {
 
 		outgoing_references_.insert(pos);
 		Cell* cell = MakeCell(pos);
-		cell->incoming_references_.insert(pos);
+		cell->incoming_references_.insert(pos_);
 	}
 }
 
