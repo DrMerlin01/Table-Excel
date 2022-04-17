@@ -200,12 +200,10 @@ void TestErrorValue() {
     auto sheet = CreateSheet();
     sheet->SetCell("E2"_pos, "A1");
     sheet->SetCell("E4"_pos, "=E2");
-    ASSERT_EQUAL(sheet->GetCell("E4"_pos)->GetValue(),
-                    CellInterface::Value(FormulaError::Category::Value));
+    ASSERT_EQUAL(sheet->GetCell("E4"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Value));
 
     sheet->SetCell("E2"_pos, "3D");
-    ASSERT_EQUAL(sheet->GetCell("E4"_pos)->GetValue(),
-                    CellInterface::Value(FormulaError::Category::Value));
+    ASSERT_EQUAL(sheet->GetCell("E4"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Value));
 }
 
 void TestErrorDiv0() {
@@ -214,46 +212,38 @@ void TestErrorDiv0() {
     constexpr double max = numeric_limits<double>::max();
 
     sheet->SetCell("A1"_pos, "=1/0");
-    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(),
-                    CellInterface::Value(FormulaError::Category::Div0));
+    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Div0));
 
     sheet->SetCell("A1"_pos, "=1e+200/1e-200");
-    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(),
-                    CellInterface::Value(FormulaError::Category::Div0));
+    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Div0));
 
     sheet->SetCell("A1"_pos, "=0/0");
-    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(),
-                    CellInterface::Value(FormulaError::Category::Div0));
+    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Div0));
 
     {
         ostringstream formula;
         formula << '=' << max << '+' << max;
         sheet->SetCell("A1"_pos, formula.str());
-        ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(),
-                        CellInterface::Value(FormulaError::Category::Div0));
+        ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Div0));
     }
-
     {
         ostringstream formula;
         formula << '=' << -max << '-' << max;
         sheet->SetCell("A1"_pos, formula.str());
-        ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(),
-                        CellInterface::Value(FormulaError::Category::Div0));
+        ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Div0));
     }
-
     {
         ostringstream formula;
         formula << '=' << max << '*' << max;
         sheet->SetCell("A1"_pos, formula.str());
-        ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(),
-                    CellInterface::Value(FormulaError::Category::Div0));
+        ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(FormulaError::Category::Div0));
     }
 }
 
 void TestEmptyCellTreatedAsZero() {
     auto sheet = CreateSheet();
     sheet->SetCell("A1"_pos, "=B2");
-    //ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(0));
+    ASSERT_EQUAL(sheet->GetCell("A1"_pos)->GetValue(), CellInterface::Value(0.));
 }
 
 void TestFormulaInvalidPosition() {
