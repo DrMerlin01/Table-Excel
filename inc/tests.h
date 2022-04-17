@@ -38,7 +38,7 @@ void TestErrorValue();
 
 void TestErrorDiv0();
 
-//void TestEmptyCellTreatedAsZero();
+void TestEmptyCellTreatedAsZero();
 
 void TestFormulaInvalidPosition();
 

@@ -47,6 +47,7 @@ void Sheet::ClearCell(Position pos) {
 		auto &cell = cells_[pos.row][pos.col];
 		if (cell) {
 			cell->Clear();
+			cell.reset();
 		}
 	}
 }
@@ -86,7 +87,7 @@ const Cell* Sheet::GetCellByIndex(const Position pos) const {
 
 	if (pos.row >= static_cast<int>(cells_.size()) || 
 		pos.col >= static_cast<int>(cells_[pos.row].size()) ||
-		cells_[pos.row][pos.col]->GetText().empty()) {
+		cells_[pos.row][pos.col] == nullptr) {
 		return nullptr;
 	} else {
 		return cells_[pos.row][pos.col].get();
